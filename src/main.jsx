@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 import { useMediaQuery } from '@mui/material'
+import { Analytics } from "@vercel/analytics/react"
 
 function ThemeWrapper() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')

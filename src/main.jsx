@@ -22,6 +22,7 @@ function ThemeWrapper() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Analytics />
       <App />
     </ThemeProvider>
   )

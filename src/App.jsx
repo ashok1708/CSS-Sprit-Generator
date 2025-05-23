@@ -4,21 +4,59 @@ import styled from '@emotion/styled';
 import { Button, Box, Typography, Paper, FormControl, InputLabel, Select, MenuItem, TextField, Stack } from '@mui/material';
 import { saveAs } from 'file-saver';
 
+
+
+const CodeBlock = styled.pre`
+  background: ${({ theme }) => theme.palette.mode === 'dark' 
+    ? 'linear-gradient(145deg, #1e1e1e, #2d2d2d)'
+    : 'linear-gradient(145deg, #f8f9fa, #e9ecef)'};
+  color: ${({ theme }) => theme.palette.mode === 'dark' ? '#e0e0e0' : '#1a1a1a'};
+  padding: 24px;
+  border-radius: 12px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+    ? '0 4px 8px rgba(0, 0, 0, 0.3)'
+    : '0 4px 8px rgba(0, 0, 0, 0.15)'};
+  border: 1px solid ${({ theme }) => theme.palette.mode === 'dark' ? '#333' : '#e0e0e0'};
+`;
+
+const StyledPaper = styled(Paper)`
+  background-color: ${({ theme }) => theme.palette.mode === 'dark' ? '#1e1e1e' : '#ffffff'};
+  border-radius: 16px;
+  box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+    ? '0 4px 20px rgba(0, 0, 0, 0.3)'
+    : '0 4px 20px rgba(0, 0, 0, 0.08)'};
+  padding: 32px;
+  margin: 32px 0;
+  border: 1px solid ${({ theme }) => theme.palette.mode === 'dark' ? '#333' : 'transparent'};
+`;
+
 const DropzoneContainer = styled.div`
-  border: 2px dashed #3f51b5;
+  border: 2px dashed ${({ theme }) => theme.palette.mode === 'dark' ? '#666' : '#3f51b5'};
   border-radius: 12px;
   padding: 48px;
   text-align: center;
   cursor: pointer;
   margin: 24px 0;
-  background-color: rgba(63, 81, 181, 0.05);
+  background-color: ${({ theme }) => theme.palette.mode === 'dark'
+    ? 'rgba(255, 255, 255, 0.05)'
+    : 'rgba(63, 81, 181, 0.05)'};
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+    ? '0 4px 6px rgba(0, 0, 0, 0.2)'
+    : '0 4px 6px rgba(0, 0, 0, 0.05)'};
   &:hover {
-    border-color: #1a237e;
-    background-color: rgba(63, 81, 181, 0.1);
+    border-color: ${({ theme }) => theme.palette.mode === 'dark' ? '#888' : '#1a237e'};
+    background-color: ${({ theme }) => theme.palette.mode === 'dark'
+      ? 'rgba(255, 255, 255, 0.1)'
+      : 'rgba(63, 81, 181, 0.1)'};
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+      ? '0 6px 12px rgba(0, 0, 0, 0.3)'
+      : '0 6px 12px rgba(0, 0, 0, 0.1)'};
   }
 `;
 
@@ -28,53 +66,42 @@ const PreviewContainer = styled.div`
   gap: 20px;
   margin: 32px 0;
   padding: 24px;
-  background-color: #f8f9fa;
+  background-color: ${({ theme }) => theme.palette.mode === 'dark' ? '#2d2d2d' : '#f8f9fa'};
   border-radius: 12px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: inset ${({ theme }) => theme.palette.mode === 'dark'
+    ? '0 2px 4px rgba(0, 0, 0, 0.2)'
+    : '0 2px 4px rgba(0, 0, 0, 0.05)'};
 `;
 
 const PreviewImage = styled.img`
   width: 100%;
   height: 140px;
   object-fit: contain;
-  border: 1px solid #e0e0e0;
+  border: 1px solid ${({ theme }) => theme.palette.mode === 'dark' ? '#444' : '#e0e0e0'};
   border-radius: 8px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.palette.mode === 'dark' ? '#1e1e1e' : 'white'};
   padding: 12px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+    ? '0 2px 4px rgba(0, 0, 0, 0.2)'
+    : '0 2px 4px rgba(0, 0, 0, 0.05)'};
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+      ? '0 4px 8px rgba(0, 0, 0, 0.3)'
+      : '0 4px 8px rgba(0, 0, 0, 0.1)'};
   }
 `;
 
 const ResultContainer = styled.div`
   margin: 40px 0;
   padding: 24px;
-  background-color: #f8f9fa;
+  background-color: ${({ theme }) => theme.palette.mode === 'dark' ? '#2d2d2d' : '#f8f9fa'};
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-`;
-
-const CodeBlock = styled.pre`
-  background: linear-gradient(145deg, #1a237e, #283593);
-  color: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  overflow-x: auto;
-  font-family: 'Fira Code', 'Consolas', monospace;
-  font-size: 14px;
-  line-height: 1.6;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-`;
-
-const StyledPaper = styled(Paper)`
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  padding: 32px;
-  margin: 32px 0;
+  box-shadow: ${({ theme }) => theme.palette.mode === 'dark'
+    ? '0 2px 8px rgba(0, 0, 0, 0.2)'
+    : '0 2px 8px rgba(0, 0, 0, 0.05)'};
+  border: 1px solid ${({ theme }) => theme.palette.mode === 'dark' ? '#333' : 'transparent'};
 `;
 
 function App() {
@@ -244,8 +271,19 @@ function App() {
     }
   };
 
+  // Update the Box component's styles in the return statement
   return (
-    <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: { xs: 2, sm: 4 } }}>
+    <Box sx={{ 
+      maxWidth: 1200, 
+      margin: '0 auto', 
+      padding: { xs: 2, sm: 4 },
+      display: 'grid',
+      gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+      gap: { xs: 2, md: 4 },
+      bgcolor: 'background.default',
+      color: 'text.primary',
+      minHeight: '100vh'
+    }}>
       <Typography 
         variant="h4" 
         gutterBottom 
@@ -254,13 +292,18 @@ function App() {
           fontWeight: 700, 
           textAlign: 'center', 
           mb: 5,
-          fontSize: { xs: '1.75rem', sm: '2.125rem' }
+          fontSize: { xs: '1.75rem', sm: '2.125rem' },
+          gridColumn: { xs: '1', md: '1 / -1' }
         }}
       >
         CSS Sprite Generator
       </Typography>
-
+  
+      {/* Left Column - Image Uploader */}
       <StyledPaper elevation={3}>
+        <Typography variant="h6" sx={{ mb: 2, color: '#1a237e' }}>
+          Upload Images
+        </Typography>
         <DropzoneContainer {...getRootProps()} style={{ opacity: isGenerating ? 0.6 : 1 }}>
           <input {...getInputProps()} disabled={isGenerating} />
           {isDragActive ? (
@@ -273,12 +316,27 @@ function App() {
             </Typography>
           )}
         </DropzoneContainer>
-
+  
         {images.length > 0 && (
+          <PreviewContainer>
+            {images.map((file, index) => (
+              <PreviewImage
+                key={file.name}
+                src={file.preview}
+                alt={`Preview ${index + 1}`}
+              />
+            ))}
+          </PreviewContainer>
+        )}
+      </StyledPaper>
+  
+      {/* Right Column - Generator Options and Results */}
+      <StyledPaper elevation={3}>
+        <Typography variant="h6" sx={{ mb: 2, color: '#1a237e' }}>
+          Generator Options
+        </Typography>
+        {images.length > 0 ? (
           <>
-            <Typography variant="h6" sx={{ mt: 4, mb: 2, color: '#1a237e' }}>
-              Options
-            </Typography>
             <Stack spacing={3} sx={{ mb: 4 }}>
               <FormControl fullWidth>
                 <InputLabel>Layout Direction</InputLabel>
@@ -293,7 +351,7 @@ function App() {
                   <MenuItem value="diagonal">Diagonal</MenuItem>
                 </Select>
               </FormControl>
-
+  
               <TextField
                 fullWidth
                 type="number"
@@ -303,7 +361,7 @@ function App() {
                 disabled={isGenerating}
                 InputProps={{ inputProps: { min: 0 } }}
               />
-
+  
               <TextField
                 fullWidth
                 label="Class Prefix"
@@ -311,8 +369,8 @@ function App() {
                 onChange={(e) => setClassPrefix(e.target.value)}
                 disabled={isGenerating}
               />
-
-              <Stack direction="row" spacing={2}>
+  
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <TextField
                   fullWidth
                   type="number"
@@ -340,7 +398,6 @@ function App() {
                 disabled={isGenerating}
                 sx={{
                   bgcolor: '#3f51b5',
-                  '&:hover': { bgcolor: '#1a237e' },
                   py: 2,
                   px: 4,
                   fontSize: '1.1rem',
@@ -357,54 +414,48 @@ function App() {
                 {isGenerating ? 'Generating...' : 'Generate Sprite'}
               </Button>
             </Stack>
-
-            <PreviewContainer>
-              {images.map((file, index) => (
-                <PreviewImage
-                  key={file.name}
-                  src={file.preview}
-                  alt={`Preview ${index + 1}`}
-                />
-              ))}
-            </PreviewContainer>
+  
+            {spriteUrl && cssCode && (
+              <ResultContainer>
+                <Typography variant="h6" sx={{ mb: 2, color: '#1a237e' }}>
+                  Generated Sprite
+                </Typography>
+                <Box sx={{ mb: 4, textAlign: 'center' }}>
+                  <img
+                    src={spriteUrl}
+                    alt="Generated Sprite"
+                    style={{ maxWidth: '100%', height: 'auto', border: '1px solid #e0e0e0', borderRadius: 4 }}
+                  />
+                </Box>
+  
+                <Typography variant="h6" sx={{ mb: 2, color: '#1a237e' }}>
+                  CSS Code
+                </Typography>
+                <CodeBlock>{cssCode}</CodeBlock>
+  
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mt: 3 }}>
+                  <Button
+                    variant="contained"
+                    onClick={downloadSprite}
+                    sx={{ flex: 1, bgcolor: '#3f51b5', '&:hover': { bgcolor: '#1a237e' } }}
+                  >
+                    Download Sprite
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={downloadCSS}
+                    sx={{ flex: 1, bgcolor: '#3f51b5', '&:hover': { bgcolor: '#1a237e' } }}
+                  >
+                    Download CSS
+                  </Button>
+                </Stack>
+              </ResultContainer>
+            )}
           </>
-        )}
-
-        {spriteUrl && cssCode && (
-          <ResultContainer>
-            <Typography variant="h6" sx={{ mb: 2, color: '#1a237e' }}>
-              Generated Sprite
-            </Typography>
-            <Box sx={{ mb: 4, textAlign: 'center' }}>
-              <img
-                src={spriteUrl}
-                alt="Generated Sprite"
-                style={{ maxWidth: '100%', height: 'auto', border: '1px solid #e0e0e0', borderRadius: 4 }}
-              />
-            </Box>
-
-            <Typography variant="h6" sx={{ mb: 2, color: '#1a237e' }}>
-              CSS Code
-            </Typography>
-            <CodeBlock>{cssCode}</CodeBlock>
-
-            <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
-              <Button
-                variant="contained"
-                onClick={downloadSprite}
-                sx={{ flex: 1, bgcolor: '#3f51b5', '&:hover': { bgcolor: '#1a237e' } }}
-              >
-                Download Sprite
-              </Button>
-              <Button
-                variant="contained"
-                onClick={downloadCSS}
-                sx={{ flex: 1, bgcolor: '#3f51b5', '&:hover': { bgcolor: '#1a237e' } }}
-              >
-                Download CSS
-              </Button>
-            </Stack>
-          </ResultContainer>
+        ) : (
+          <Typography color="textSecondary" sx={{ textAlign: 'center', py: 4 }}>
+            Please upload images to start generating sprites
+          </Typography>
         )}
       </StyledPaper>
     </Box>

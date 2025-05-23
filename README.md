@@ -1,12 +1,61 @@
-# React + Vite
+# CSS Sprite Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application that helps developers create and manage CSS sprites efficiently. This tool combines multiple images into a single sprite sheet and generates the corresponding CSS code, optimizing web performance by reducing HTTP requests.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Upload multiple images to create sprite sheets
+- Automatic sprite sheet generation
+- CSS code generation with proper positioning
+- Real-time preview of sprite sheet
+- Customizable sprite settings
+- Support for various image formats (PNG, JPEG, GIF)
+- Responsive design
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Clone the repository
+git clone [your-repository-url]
+
+# Navigate to the project directory
+cd css-sprit-generator
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## Usage
+- Open the application in your web browser
+- Click the upload button to select multiple images
+- Adjust sprite settings if needed (padding, arrangement, etc.)
+- Preview the generated sprite sheet
+- Copy the generated CSS code
+- Use the sprite sheet and CSS in your project
+
+## Development
+# Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+
+- npm run dev - Starts the development server
+- npm run build - Builds the app for production
+- npm run preview - Preview the production build locally
+
+## Contributing
+- Fork the repository
+- Create your feature branch ( git checkout -b feature/AmazingFeature )
+- Commit your changes ( git commit -m 'Add some AmazingFeature' )
+- Push to the branch ( git push origin feature/AmazingFeature )
+- Open a Pull Request
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+- Built with React
+- Powered by Vite
+- Favicon designed for optimal visual representation of sprite functionality

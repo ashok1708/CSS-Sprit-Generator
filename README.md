@@ -16,7 +16,7 @@ A modern web application that helps developers create and manage CSS sprites eff
 
 ```bash
 # Clone the repository
-git clone [your-repository-url]
+git clone https://github.com/ashok1708/css-sprit-generator.git
 
 # Navigate to the project directory
 cd css-sprit-generator
